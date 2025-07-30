@@ -14,24 +14,24 @@ export default function Navbar() {
           className="text-2xl font-extrabold tracking-wide text-white hover:brightness-110 transition"
           onClick={() => setMenuOpen(false)}
         >
-          Stride <span className="text-blue-400">SMP</span>
+          Java<span className="text-yellow-400">PVP</span>
         </Link>
 
         {/* Desktop Links */}
         <div className="hidden sm:flex space-x-6 text-lg font-medium">
-          <Link href="/" className="hover:text-blue-400 transition-colors duration-200">
+          <Link href="/" className="hover:text-yellow-400 transition-colors duration-200">
             Home
           </Link>
-          <Link href="/rules" className="hover:text-blue-400 transition-colors duration-200">
+          <Link href="/rules" className="hover:text-yellow-400 transition-colors duration-200">
             Rules
           </Link>
-          <Link href="/features" className="hover:text-blue-400 transition-colors duration-200">
+          <Link href="/features" className="hover:text-yellow-400 transition-colors duration-200">
             Features
           </Link>
-          <Link href="/store" className="hover:text-blue-400 transition-colors duration-200">
+          <Link href="/store" className="hover:text-yellow-400 transition-colors duration-200">
             Store
           </Link>
-          <Link href="/discord" className="hover:text-blue-400 transition-colors duration-200">
+          <Link href="/discord" className="hover:text-yellow-400 transition-colors duration-200">
             Discord
           </Link>
         </div>
@@ -67,19 +67,19 @@ export default function Navbar() {
         }`}
       >
         <div className="flex flex-col px-6 space-y-3 text-lg font-medium">
-          <Link href="/" className="hover:text-blue-400" onClick={() => setMenuOpen(false)}>
+          <Link href="/" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>
             Home
           </Link>
-          <Link href="/rules" className="hover:text-blue-400" onClick={() => setMenuOpen(false)}>
+          <Link href="/rules" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>
             Rules
           </Link>
-          <Link href="/features" className="hover:text-blue-400" onClick={() => setMenuOpen(false)}>
+          <Link href="/features" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>
             Features
           </Link>
-          <Link href="/store" className="hover:text-blue-400" onClick={() => setMenuOpen(false)}>
+          <Link href="/store" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>
             Store
           </Link>
-          <Link href="/discord" className="hover:text-blue-400" onClick={() => setMenuOpen(false)}>
+          <Link href="/discord" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>
             Discord
           </Link>
         </div>
