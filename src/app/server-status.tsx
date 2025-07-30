@@ -52,17 +52,16 @@ export default function ServerStatus() {
 
   if (!status) {
     return (
-      <div className="max-w-6xl mx-auto bg-red-900 rounded-xl p-6 mt-8 text-red-300 text-center font-semibold">
+      <div className="max-w-7xl mx-auto bg-red-900 rounded-xl p-6 mt-8 text-red-300 text-center font-semibold">
         Server is currently offline or unreachable.
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto mt-8 px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="max-w-7xl mx-auto mt-8 px-4 grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10">
       {/* Status Card */}
-      <section className="bg-gray-900 rounded-xl p-6 flex flex-col text-white h-full">
-        {/* Refresh button top right */}
+      <section className="bg-gray-900 rounded-xl p-6 flex flex-col text-white relative min-h-[500px]">
         <button
           onClick={fetchStatus}
           aria-label="Refresh Server Status"
@@ -88,12 +87,12 @@ export default function ServerStatus() {
           </h2>
         </header>
 
-        <p
-          className="italic text-blue-300 mb-8 text-center break-words leading-relaxed text-lg flex-grow"
-          dangerouslySetInnerHTML={{ __html: status.motd }}
-        />
+        {/* Styled MOTD */}
+        <div className="bg-gray-800 p-4 rounded-lg mb-6 text-blue-300 text-sm leading-relaxed font-mono whitespace-pre-wrap">
+          {status.motd}
+        </div>
 
-        {/* Software and Version side by side */}
+        {/* Software and Version */}
         <div className="flex justify-between border-t border-gray-700 pt-4 mb-6 text-gray-300 font-semibold text-sm sm:text-base">
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Software</div>
@@ -105,11 +104,13 @@ export default function ServerStatus() {
           </div>
         </div>
 
-        {/* Ping and Players side by side */}
+        {/* Ping and Players */}
         <div className="flex justify-between text-gray-300 font-semibold text-sm sm:text-base mb-6">
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Ping</div>
-            <div className="font-mono">{typeof status.ping === 'number' ? `${status.ping} ms` : 'N/A'}</div>
+            <div className="font-mono">
+              {typeof status.ping === 'number' ? `${status.ping} ms` : 'N/A'}
+            </div>
           </div>
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Players</div>
@@ -119,7 +120,7 @@ export default function ServerStatus() {
           </div>
         </div>
 
-        {/* IP / Port / Last Updated - left-aligned */}
+        {/* IP / Port / Last Updated */}
         <div className="bg-gray-800 rounded-lg p-5 text-gray-300 font-mono text-sm space-y-6">
           <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
             <FiWifi className="w-6 h-6 text-blue-500" />
@@ -148,7 +149,7 @@ export default function ServerStatus() {
       </section>
 
       {/* Player List Card */}
-      <section className="bg-gray-900 rounded-xl p-6 text-white flex flex-col h-full">
+      <section className="bg-gray-900 rounded-xl p-6 text-white flex flex-col min-h-[500px]">
         <h3 className="text-xl font-semibold text-blue-400 mb-4 border-b border-blue-400 pb-2">
           Online Players
         </h3>
