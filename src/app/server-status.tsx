@@ -29,7 +29,6 @@ interface ServerStatusData {
 export default function ServerStatus() {
   const [status, setStatus] = useState<ServerStatusData | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const [uptimeSeconds, setUptimeSeconds] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const uptimeInterval = useRef<NodeJS.Timeout | null>(null);
 
@@ -41,7 +40,6 @@ export default function ServerStatus() {
       const data = await res.json();
       setStatus(data);
       setLastUpdated(new Date());
-      setUptimeSeconds(0);
     } catch {
       setStatus(null);
     }
@@ -52,38 +50,18 @@ export default function ServerStatus() {
     fetchStatus();
   }, []);
 
-  useEffect(() => {
-    if (!lastUpdated) return;
-    if (uptimeInterval.current) clearInterval(uptimeInterval.current);
-
-    uptimeInterval.current = setInterval(() => {
-      setUptimeSeconds((sec) => sec + 1);
-    }, 1000);
-
-    return () => {
-      if (uptimeInterval.current) clearInterval(uptimeInterval.current);
-    };
-  }, [lastUpdated]);
-
-  function formatUptime(sec: number) {
-    const h = Math.floor(sec / 3600);
-    const m = Math.floor((sec % 3600) / 60);
-    const s = sec % 60;
-    return `${h > 0 ? h + 'h ' : ''}${m}m ${s}s`;
-  }
-
   if (!status) {
     return (
-      <div className="max-w-5xl mx-auto bg-red-900 rounded-xl p-6 mt-8 text-red-300 text-center font-semibold">
+      <div className="max-w-6xl mx-auto bg-red-900 rounded-xl p-6 mt-8 text-red-300 text-center font-semibold">
         Server is currently offline or unreachable.
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto mt-8 px-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="max-w-6xl mx-auto mt-8 px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
       {/* Status Card */}
-      <section className="bg-gray-900 rounded-xl p-6 flex flex-col text-white h-full relative">
+      <section className="bg-gray-900 rounded-xl p-6 flex flex-col text-white h-full">
         {/* Refresh button top right */}
         <button
           onClick={fetchStatus}
@@ -131,9 +109,7 @@ export default function ServerStatus() {
         <div className="flex justify-between text-gray-300 font-semibold text-sm sm:text-base mb-6">
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Ping</div>
-            <div className="font-mono">
-              {typeof status.ping === 'number' ? `${status.ping} ms` : 'N/A'}
-            </div>
+            <div className="font-mono">{typeof status.ping === 'number' ? `${status.ping} ms` : 'N/A'}</div>
           </div>
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Players</div>
@@ -143,7 +119,7 @@ export default function ServerStatus() {
           </div>
         </div>
 
-        {/* IP / Port / Last Updated / Uptime - left-aligned */}
+        {/* IP / Port / Last Updated - left-aligned */}
         <div className="bg-gray-800 rounded-lg p-5 text-gray-300 font-mono text-sm space-y-6">
           <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
             <FiWifi className="w-6 h-6 text-blue-500" />
@@ -161,19 +137,11 @@ export default function ServerStatus() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
+          <div className="flex items-center gap-3">
             <FiClock className="w-6 h-6 text-blue-400" />
             <div className="text-left">
               <div className="text-blue-400 text-xs font-semibold">Last Updated</div>
               <div>{lastUpdated ? lastUpdated.toLocaleTimeString() : '—'}</div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <FiRefreshCw className="w-6 h-6 text-blue-400 animate-spin-slow" />
-            <div className="text-left">
-              <div className="text-blue-400 text-xs font-semibold">Uptime</div>
-              <div>{formatUptime(uptimeSeconds)}</div>
             </div>
           </div>
         </div>
