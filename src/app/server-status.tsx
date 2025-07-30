@@ -87,8 +87,7 @@ export default function ServerStatus() {
           </h2>
         </header>
 
-        {/* Styled MOTD */}
-        <div className="bg-gray-800 p-4 rounded-lg mb-6 text-blue-300 text-sm leading-relaxed font-mono whitespace-pre-wrap">
+        <div className="bg-gray-800 p-4 rounded-lg mb-6 text-blue-300 text-sm leading-relaxed font-mono whitespace-pre-wrap overflow-auto max-h-40">
           {status.motd}
         </div>
 
