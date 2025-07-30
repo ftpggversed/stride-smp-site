@@ -1,69 +1,77 @@
 'use client';
 
 import { useState } from 'react';
-import { FiCheckCircle, FiLayers, FiLock, FiTrendingUp, FiUsers, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import {
+  FiHeart,
+  FiShield,
+  FiZap,
+  FiUsers,
+  FiAward,
+  FiChevronDown,
+  FiChevronUp,
+} from 'react-icons/fi';
 
 const features = [
   {
-    icon: <FiCheckCircle className="w-8 h-8 text-blue-500" />,
-    title: 'Reliable Uptime',
+    icon: <FiHeart className="w-8 h-8 text-yellow-400" />,
+    title: 'Lifesteal Mechanics',
     description:
-      'Our servers guarantee maximum uptime and consistent performance to keep you connected at all times. Experience minimal latency and no unexpected downtime.',
+      'Gain hearts by defeating other players and lose them when you die — high stakes create thrilling PvP encounters.',
   },
   {
-    icon: <FiUsers className="w-8 h-8 text-blue-500" />,
-    title: 'Active Community',
+    icon: <FiShield className="w-8 h-8 text-yellow-400" />,
+    title: 'Balanced Combat',
     description:
-      'Join a vibrant, friendly, and supportive player base where collaboration and competition thrive in a welcoming environment.',
+      'Carefully tuned PvP settings to ensure fair fights — no overpowered gear or unfair pay-to-win mechanics.',
   },
   {
-    icon: <FiLock className="w-8 h-8 text-blue-500" />,
-    title: 'Secure & Private',
+    icon: <FiZap className="w-8 h-8 text-yellow-400" />,
+    title: 'Custom Abilities',
     description:
-      'We prioritize your privacy and security with robust encryption and strict data protection policies to keep your information safe.',
+      'Unlock unique kits, powers, or effects that add spice to the battlefield while keeping things competitive.',
   },
   {
-    icon: <FiLayers className="w-8 h-8 text-blue-500" />,
-    title: 'Cross-Platform Support',
+    icon: <FiUsers className="w-8 h-8 text-yellow-400" />,
+    title: 'Active Player Base',
     description:
-      'Seamlessly connect from both Java and Bedrock editions, so you can play with friends no matter what device you use.',
+      'Jump into a lively server where duels, raids, and alliances are happening around the clock.',
   },
   {
-    icon: <FiTrendingUp className="w-8 h-8 text-blue-500" />,
-    title: 'Continuous Updates',
+    icon: <FiAward className="w-8 h-8 text-yellow-400" />,
+    title: 'Weekly Events & Rewards',
     description:
-      'Enjoy regular updates packed with new features, bug fixes, and optimizations to keep your gameplay fresh and smooth.',
+      'Participate in custom events, challenges, and seasonal competitions with real rewards for top players.',
   },
 ];
 
 const benefits = [
-  '24/7 customer support with fast response times.',
-  'Custom plugins to enhance gameplay experience.',
-  'Optimized server hardware for peak performance.',
-  'Easy server management with intuitive control panels.',
-  'Community events, giveaways, and exclusive content.',
+  'Crossplay support — join from Java or Bedrock.',
+  'No pay-to-win kits or unfair perks.',
+  'Fast anti-cheat system to stop hackers instantly.',
+  'Earn ranks through gameplay, not just purchases.',
+  'Tight-knit PvP-focused community.',
 ];
 
 const faqs = [
   {
     question: 'Can I play on both Java and Bedrock editions?',
     answer:
-      'Yes! Our server supports both editions seamlessly, allowing players across platforms to connect and play together.',
+      'Yes! JavaPVP supports crossplay, allowing players from Java and Bedrock to play together seamlessly.',
   },
   {
-    question: 'What is the server uptime guarantee?',
+    question: 'What happens when I lose all my hearts?',
     answer:
-      'We maintain a 99.9% uptime guarantee, with constant monitoring and fast issue resolution to keep the server live.',
+      'You’ll be temporarily banned for a short period (e.g. 24 hours), after which you can rejoin with a fresh start or buy back in-game.',
   },
   {
-    question: 'How often do you release updates?',
+    question: 'Are there any pay-to-win features?',
     answer:
-      'We release major updates quarterly, with minor patches and fixes rolled out as needed.',
+      'No. All competitive aspects are strictly fair. Cosmetic perks may be available, but no gameplay advantages.',
   },
   {
-    question: 'Is my data safe?',
+    question: 'How often are events held?',
     answer:
-      'Absolutely. We adhere to strict security standards and encrypt sensitive data to protect your privacy.',
+      'We host weekly events such as kill races, team battles, and loot hunts — often with seasonal leaderboards.',
   },
 ];
 
@@ -76,12 +84,12 @@ export default function Features() {
 
   return (
     <main className="min-h-screen text-white px-6 py-12 max-w-5xl mx-auto">
-      <h1 className="text-5xl font-extrabold mb-6 text-center text-blue-400">
+      <h1 className="text-5xl font-extrabold mb-6 text-center text-yellow-400">
         Features & Benefits
       </h1>
 
       <p className="max-w-3xl mx-auto mb-12 text-center text-gray-300 leading-relaxed text-lg">
-        Discover why our Minecraft server is the perfect place for players looking for reliability, community, and cutting-edge features. Whether you’re a casual gamer or a hardcore enthusiast, we have something for everyone.
+        JavaPVP is a competitive Lifesteal Minecraft server built for serious PvPers and casual grinders alike. Every fight matters, every heart counts.
       </p>
 
       {/* Features Grid */}
@@ -99,7 +107,7 @@ export default function Features() {
 
       {/* Why Choose Us */}
       <section className="mb-16">
-        <h2 className="text-3xl font-bold mb-6 text-blue-400 text-center">Why Choose Us?</h2>
+        <h2 className="text-3xl font-bold mb-6 text-yellow-400 text-center">Why Choose Us?</h2>
         <ul className="max-w-xl mx-auto list-disc list-inside space-y-3 text-gray-300 text-lg">
           {benefits.map((item, idx) => (
             <li key={idx}>{item}</li>
@@ -109,7 +117,7 @@ export default function Features() {
 
       {/* FAQ */}
       <section className="mb-16 max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-blue-400 text-center">Frequently Asked Questions</h2>
+        <h2 className="text-3xl font-bold mb-8 text-yellow-400 text-center">Frequently Asked Questions</h2>
         <div className="space-y-4">
           {faqs.map(({ question, answer }, idx) => {
             const isOpen = idx === openFaqIndex;
@@ -122,9 +130,9 @@ export default function Features() {
                 <div className="flex justify-between items-center">
                   <h3 className="text-xl font-semibold">{question}</h3>
                   {isOpen ? (
-                    <FiChevronUp className="w-6 h-6 text-blue-400" />
+                    <FiChevronUp className="w-6 h-6 text-yellow-400" />
                   ) : (
-                    <FiChevronDown className="w-6 h-6 text-blue-400" />
+                    <FiChevronDown className="w-6 h-6 text-yellow-400" />
                   )}
                 </div>
                 {isOpen && (
@@ -138,15 +146,15 @@ export default function Features() {
 
       {/* Call to Action */}
       <section className="text-center">
-        <h2 className="text-3xl font-extrabold mb-4 text-blue-400">
+        <h2 className="text-3xl font-extrabold mb-4 text-yellow-400">
           Ready to join?
         </h2>
         <p className="text-gray-300 mb-6 max-w-xl mx-auto">
-          Connect with us today and experience a Minecraft server designed with players in mind.
+          Connect to JavaPVP today and dive into the most intense Lifesteal PvP experience out there.
         </p>
         <a
-          href="minecraft://play.stridesmp.xyz"
-          className="inline-block bg-blue-500 hover:bg-blue-600 transition text-white font-semibold px-8 py-3 rounded-lg"
+          href="minecraft://play.javapvp.xyz"
+          className="inline-block bg-yellow-500 hover:bg-yellow-600 transition text-white font-semibold px-8 py-3 rounded-lg"
         >
           Join Now
         </a>
