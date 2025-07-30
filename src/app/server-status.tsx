@@ -8,7 +8,6 @@ import {
   FiClock,
   FiWifi,
   FiRefreshCw,
-  FiUser,
 } from 'react-icons/fi';
 
 interface Player {
@@ -17,51 +16,40 @@ interface Player {
 
 interface ServerStatusData {
   online: boolean;
-  players: {
-    online: number;
-    max: number;
-    list?: Player[];
-  };
+  players: { online: number; max: number; list?: Player[] };
   motd: string;
-  motdRaw?: string;
   version: string;
-  protocolVersion?: number | string;
-  software?: string;
-  onlineMode?: boolean;
+  software: string;
+  protocolVersion?: number;
   ping?: number;
   ip?: string;
   port?: number;
 }
 
 export default function ServerStatus() {
-  const [data, setData] = useState<ServerStatusData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState<ServerStatusData | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [uptimeSeconds, setUptimeSeconds] = useState(0);
-  const [buttonText, setButtonText] = useState('Refresh Status');
+  const [refreshing, setRefreshing] = useState(false);
   const uptimeInterval = useRef<NodeJS.Timeout | null>(null);
 
   async function fetchStatus() {
-    setLoading(true);
+    setRefreshing(true);
     try {
       const res = await fetch('/api/status');
       if (!res.ok) throw new Error('Failed to fetch');
-      const json = await res.json();
-      setData(json);
+      const data = await res.json();
+      setStatus(data);
       setLastUpdated(new Date());
       setUptimeSeconds(0);
-      setButtonText('Refreshed');
-      setTimeout(() => setButtonText('Refresh Status'), 2000);
     } catch {
-      setData(null);
+      setStatus(null);
     }
-    setLoading(false);
+    setRefreshing(false);
   }
 
   useEffect(() => {
     fetchStatus();
-    const interval = setInterval(fetchStatus, 30000);
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -84,157 +72,126 @@ export default function ServerStatus() {
     return `${h > 0 ? h + 'h ' : ''}${m}m ${s}s`;
   }
 
-  if (loading) {
+  if (!status) {
     return (
-      <div className="animate-pulse max-w-5xl mx-auto flex gap-6 p-5 mt-8">
-        <div className="flex-1 bg-gray-900 rounded-xl shadow-lg p-6 space-y-4">
-          <div className="h-7 bg-gray-700 rounded"></div>
-          <div className="h-5 bg-gray-700 rounded"></div>
-          <div className="h-5 bg-gray-700 rounded"></div>
-          <div className="h-5 bg-gray-700 rounded"></div>
-        </div>
-        <div className="flex-[2] bg-gray-900 rounded-xl shadow-lg p-6">
-          <div className="h-7 bg-gray-700 rounded mb-3"></div>
-          <div className="h-5 bg-gray-700 rounded mb-2"></div>
-          <div className="h-5 bg-gray-700 rounded mb-2"></div>
-          <div className="h-5 bg-gray-700 rounded"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!data) {
-    return (
-      <div className="max-w-3xl mx-auto bg-red-900 rounded-xl shadow-lg p-5 mt-8 text-red-300 text-center font-semibold">
+      <div className="max-w-5xl mx-auto bg-red-900 rounded-xl p-6 mt-8 text-red-300 text-center font-semibold">
         Server is currently offline or unreachable.
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto flex gap-6 p-5 mt-8 text-white">
+    <div className="max-w-5xl mx-auto mt-8 px-4 grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Status Card */}
-      <div className="bg-neutral-900 border border-neutral-700 rounded-xl p-6 flex-[1] shadow-md flex flex-col">
-        <div className="flex items-center gap-3 mb-5">
+      <section className="bg-gray-900 rounded-xl p-6 flex flex-col text-white h-full relative">
+        {/* Refresh button top right */}
+        <button
+          onClick={fetchStatus}
+          aria-label="Refresh Server Status"
+          className={`absolute top-4 right-4 p-2 rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white transition-colors focus:outline-none focus:ring-0 ${
+            refreshing ? 'animate-spin' : ''
+          }`}
+          title="Refresh Status"
+          disabled={refreshing}
+        >
+          <FiRefreshCw size={20} />
+        </button>
+
+        <header className="flex items-center gap-3 mb-5">
           <FiServer
-            className={`w-9 h-9 ${
-              data.online ? 'text-blue-500' : 'text-red-600'
-            }`}
+            className={`w-8 h-8 ${status.online ? 'text-blue-500' : 'text-red-600'}`}
           />
           <h2
-            className={`text-xl font-extrabold ${
-              data.online ? 'text-blue-400' : 'text-red-500'
+            className={`text-xl font-bold ${
+              status.online ? 'text-blue-400' : 'text-red-500'
             }`}
           >
-            {data.online ? 'Server Online' : 'Server Offline'}
+            {status.online ? 'Server Online' : 'Server Offline'}
           </h2>
-          <div className="ml-auto text-gray-400 font-mono text-xs sm:text-sm">
-            {typeof data.ping === 'number' ? `Ping: ${data.ping} ms` : 'Ping N/A'}
-          </div>
-        </div>
+        </header>
 
-        {/* MOTD */}
         <p
-          className="mb-6 italic text-blue-300 text-center break-words leading-relaxed text-base sm:text-lg flex-grow"
-          dangerouslySetInnerHTML={{ __html: data.motd }}
+          className="italic text-blue-300 mb-8 text-center break-words leading-relaxed text-lg flex-grow"
+          dangerouslySetInnerHTML={{ __html: status.motd }}
         />
 
-        {/* Version & Player Count */}
-        <div className="flex justify-between text-gray-300 font-semibold text-base mb-6 border-t border-gray-700 pt-3">
-          <div className="flex items-center gap-2">
-            <FiActivity className="w-5 h-5 text-blue-400" />
-            <span>Version:</span>
-            <span className="ml-1 font-mono">{data.version}</span>
+        {/* Software and Version side by side */}
+        <div className="flex justify-between border-t border-gray-700 pt-4 mb-6 text-gray-300 font-semibold text-sm sm:text-base">
+          {/* Software */}
+          <div className="flex flex-col items-center w-1/2">
+            <div className="text-blue-400 font-semibold mb-1">Software</div>
+            <div className="font-mono">{status.software}</div>
           </div>
-          <div className="flex items-center gap-2">
-            <FiUsers className="w-5 h-5 text-blue-400" />
-            <span>Players:</span>
-            <span className="ml-1 font-mono">
-              {data.players.online} / {data.players.max}
-            </span>
+
+          {/* Version */}
+          <div className="flex flex-col items-center w-1/2">
+            <div className="text-blue-400 font-semibold mb-1">Version</div>
+            <div className="font-mono">{status.version}</div>
           </div>
         </div>
 
-        {/* Additional info */}
-        <div className="text-gray-300 space-y-3 mb-6 border-t border-gray-700 pt-4 font-mono text-sm">
-          <div className="flex justify-between">
-            <span>Protocol Version:</span>
-            <span>{data.protocolVersion ?? 'Unknown'}</span>
+        {/* Ping and Players side by side */}
+        <div className="flex justify-between text-gray-300 font-semibold text-sm sm:text-base mb-6">
+          {/* Ping */}
+          <div className="flex flex-col items-center w-1/2">
+            <div className="text-blue-400 font-semibold mb-1">Ping</div>
+            <div className="font-mono">
+              {typeof status.ping === 'number' ? `${status.ping} ms` : 'N/A'}
+            </div>
           </div>
 
-          <div className="flex justify-between">
-            <span>Online Mode:</span>
-            <span>
-              {typeof data.onlineMode === 'boolean'
-                ? data.onlineMode
-                  ? 'Yes'
-                  : 'No'
-                : 'Unknown'}
-            </span>
+          {/* Players */}
+          <div className="flex flex-col items-center w-1/2">
+            <div className="text-blue-400 font-semibold mb-1">Players</div>
+            <div className="font-mono">
+              {status.players.online} / {status.players.max}
+            </div>
           </div>
+        </div>
 
-          <div className="flex justify-between">
-            <span>Server Software:</span>
-            <span>{data.software ?? 'Unknown'}</span>
-          </div>
-
-          {data.motdRaw && (
+        {/* IP / Last Updated / Uptime */}
+        <div className="bg-gray-800 rounded-lg p-5 text-gray-300 font-mono text-sm space-y-6">
+          <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
+            <FiWifi className="w-6 h-6 text-blue-500" />
             <div>
-              <span className="block mb-1">Raw MOTD:</span>
-              <pre className="bg-gray-800 p-2 rounded text-xs overflow-x-auto whitespace-pre-wrap break-all">
-                {data.motdRaw}
-              </pre>
-            </div>
-          )}
-        </div>
-
-        {/* IP and port */}
-        <div className="bg-gray-800 rounded-lg p-4 space-y-4 text-gray-300">
-          <div className="flex items-center gap-2 text-blue-500 font-semibold break-all font-mono">
-            <FiWifi className="w-6 h-6" />
-            {data.ip ?? 'play.stridesmp.xyz'}
-            {data.port ? `:${data.port}` : ''}
-          </div>
-
-          <div className="flex justify-between text-xs sm:text-sm font-mono">
-            <div className="flex items-center gap-1">
-              <FiClock className="w-4 h-4 text-blue-400" />
-              <span>Last updated:</span>
-              <span className="ml-1">
-                {lastUpdated ? lastUpdated.toLocaleTimeString() : '—'}
-              </span>
-            </div>
-            <div className="flex items-center gap-1">
-              <FiRefreshCw
-                className="w-4 h-4 text-blue-400 animate-spin-slow"
-                title="Uptime is approximate since last refresh"
-              />
-              <span>Uptime:</span>
-              <span className="ml-1">{formatUptime(uptimeSeconds)}</span>
+              <div className="text-blue-400 text-xs font-semibold">IP Address</div>
+              <div>
+                {status.ip ?? 'play.stridesmp.xyz'}
+                {status.port ? `:${status.port}` : ''}
+              </div>
             </div>
           </div>
 
-          <button
-            onClick={fetchStatus}
-            className="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-2 rounded-md font-semibold mt-4"
-          >
-            {buttonText}
-          </button>
+          <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
+            <FiClock className="w-6 h-6 text-blue-400" />
+            <div>
+              <div className="text-blue-400 text-xs font-semibold">Last Updated</div>
+              <div>{lastUpdated ? lastUpdated.toLocaleTimeString() : '—'}</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <FiRefreshCw className="w-6 h-6 text-blue-400 animate-spin-slow" />
+            <div>
+              <div className="text-blue-400 text-xs font-semibold">Uptime</div>
+              <div>{formatUptime(uptimeSeconds)}</div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* Player List Card */}
-      <div className="bg-neutral-900 border border-neutral-700 rounded-xl p-6 flex-[2] shadow-md overflow-auto max-h-[450px]">
-        <h3 className="text-lg font-semibold text-blue-400 mb-4 flex items-center gap-2">
-          <FiUser /> Online Players ({data.players.online})
+      <section className="bg-gray-900 rounded-xl p-6 text-white flex flex-col h-full">
+        <h3 className="text-xl font-semibold text-blue-400 mb-4 border-b border-blue-400 pb-2">
+          Online Players
         </h3>
 
-        {data.players.list && data.players.list.length > 0 ? (
-          <ul className="text-gray-300 space-y-1 max-h-[400px] overflow-y-auto">
-            {data.players.list.map((player) => (
+        {status.players.list && status.players.list.length > 0 ? (
+          <ul className="flex-1 overflow-y-auto font-mono text-sm text-gray-300 space-y-2">
+            {status.players.list.map((player) => (
               <li
                 key={player.name}
-                className="truncate cursor-default px-3 py-1 rounded hover:bg-blue-700 transition"
+                className="truncate px-3 py-1 rounded hover:bg-blue-700 transition cursor-default"
                 title={player.name}
               >
                 {player.name}
@@ -242,11 +199,9 @@ export default function ServerStatus() {
             ))}
           </ul>
         ) : (
-          <p className="text-gray-500 italic text-center mt-8">
-            No players online
-          </p>
+          <p className="text-gray-500 italic text-center mt-10">No players online</p>
         )}
-      </div>
+      </section>
     </div>
   );
 }
