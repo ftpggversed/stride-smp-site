@@ -6,19 +6,23 @@ const SERVER_PORT = 25565; // Java server default port
 
 export async function GET() {
   try {
-    // Query server status with a 3-second timeout
-    const res = await status(SERVER_HOST, SERVER_PORT, { timeout: 3000 });
+    const res = await status(SERVER_HOST, SERVER_PORT,);
 
     return NextResponse.json({
       online: true,
       players: {
         online: res.players.online,
         max: res.players.max,
-        sample: res.players.sample?.map(p => ({ name: p.name })) || [],
+        list: res.players.sample?.map((p) => ({ name: p.name })) || [],
       },
       motd: res.motd.clean || '',
+      motdRaw: res.motd.raw || '',
       version: res.version.name || 'Unknown',
+      protocolVersion: res.version.protocol,
+      // Removed software & onlineMode properties as they don't exist in JavaStatusResponse
       ping: res.roundTripLatency,
+      ip: SERVER_HOST,
+      port: SERVER_PORT,
     });
   } catch {
     return NextResponse.json({ online: false }, { status: 503 });
