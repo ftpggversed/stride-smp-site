@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JavaPVP Server Website
 
-## Getting Started
+Welcome to the official website codebase for **JavaPVP** — a custom Lifesteal Minecraft server built for intense PvP, a thriving community, and unique gameplay mechanics.
 
-First, run the development server:
+This website was built with **Next.js 13+**, **Tailwind CSS 3.3**, and deployed for lightning-fast performance.
+
+---
+
+## 🌐 Live URL
+
+> [Live](https://javapvp.vercel.app)
+
+---
+
+## 📁 Project Structure
+
+```
+app/
+  ├── layout.tsx         // Global layout (Nav, Fonts, etc.)
+  ├── page.tsx           // Home page
+  ├── rules/page.tsx     // Server rules
+  ├── features/page.tsx  // Feature overview
+  ├── store/page.tsx     // Donation / shop page
+  ├── discord/page.tsx   // Discord invite / widget
+  └── not-found.tsx      // Custom 404 page
+components/
+  ├── Navbar.tsx         // Responsive navigation bar
+  └── ServerStatus.tsx   // Dynamic server status component
+public/
+  └── favicon.ico        // Site icon
+tailwind.config.js       // Tailwind theme customization
+```
+
+---
+
+## 🚀 Getting Started
+
+1. **Clone the repo**
+
+```bash
+git clone https://github.com/ftpggversed/stride-smp-site
+cd stride-smp-site
+```
+
+2. **Install dependencies**
+
+```bash
+npm install
+```
+
+3. **Run the development server**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [localhost](http://localhost:3000) in your browser to see the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧩 Features
 
-## Learn More
+- 🎮 Server status widget (Java + Bedrock support)
+- 📱 Fully responsive design
+- ⚡ Fast, lightweight, and SEO-ready
+- 🛒 Store integration-ready
+- 🟡 Yellow-based theme for JavaPVP branding
+- 🎨 Custom 404 and clean UX
+- 🖱️ Mouse Reactive and fully optimized
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Built With
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Icons](https://react-icons.github.io/react-icons/)
+- And More
+---
 
-## Deploy on Vercel
+## 📬 Contact & Support
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Need help or want to contribute? Reach out via [Discord](https://discord.gg/jPJ5muSQ4s) or open an issue.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
