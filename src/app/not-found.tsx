@@ -14,21 +14,21 @@ export default function NotFound() {
 
         <h1 className="relative text-8xl font-extrabold mb-4 tracking-tight select-none">404</h1>
 
-        <h2 className="relative text-3xl font-semibold mb-6 text-blue-400">
-          Well, this is awkward...
+        <h2 className="relative text-3xl font-semibold mb-6 text-yellow-400">
+          You found the void.
         </h2>
 
         <p className="relative text-gray-300 mb-10 leading-relaxed">
-          This page wandered off somewhere else — probably on a coffee break ☕️.<br />
-          Either that or it never existed. Either way, it’s lost in the void.<br />
-          Don’t worry, we’ve sent a search party (you). Try heading back home!
+          This page is either gone, misplaced, or just never existed.<br />
+          Maybe it rage-quit... maybe it got banned. Who knows.<br />
+          Either way, let’s get you back to spawn.
         </p>
 
         <Link
           href="/"
-          className="relative inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 transition text-white font-semibold rounded-xl px-6 py-4 shadow-lg shadow-blue-800/40 select-none"
+          className="relative inline-flex items-center gap-3 bg-yellow-600 hover:bg-yellow-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 transition text-white font-semibold rounded-xl px-6 py-4 shadow-lg shadow-yellow-800/40 select-none"
         >
-          <FiHome className="w-6 h-6" /> Rescue Me!
+          <FiHome className="w-6 h-6" /> Back to Base
         </Link>
       </div>
     </main>
