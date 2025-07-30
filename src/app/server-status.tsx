@@ -117,30 +117,24 @@ export default function ServerStatus() {
 
         {/* Software and Version side by side */}
         <div className="flex justify-between border-t border-gray-700 pt-4 mb-6 text-gray-300 font-semibold text-sm sm:text-base">
-          {/* Software */}
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Software</div>
-            <div className="font-mono">{status.software}</div>
+            <div className="font-mono text-center">{status.software}</div>
           </div>
-
-          {/* Version */}
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Version</div>
-            <div className="font-mono">{status.version}</div>
+            <div className="font-mono text-center">{status.version}</div>
           </div>
         </div>
 
         {/* Ping and Players side by side */}
         <div className="flex justify-between text-gray-300 font-semibold text-sm sm:text-base mb-6">
-          {/* Ping */}
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Ping</div>
             <div className="font-mono">
               {typeof status.ping === 'number' ? `${status.ping} ms` : 'N/A'}
             </div>
           </div>
-
-          {/* Players */}
           <div className="flex flex-col items-center w-1/2">
             <div className="text-blue-400 font-semibold mb-1">Players</div>
             <div className="font-mono">
@@ -149,22 +143,27 @@ export default function ServerStatus() {
           </div>
         </div>
 
-        {/* IP / Last Updated / Uptime */}
+        {/* IP / Port / Last Updated / Uptime - left-aligned */}
         <div className="bg-gray-800 rounded-lg p-5 text-gray-300 font-mono text-sm space-y-6">
           <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
             <FiWifi className="w-6 h-6 text-blue-500" />
-            <div>
+            <div className="text-left">
               <div className="text-blue-400 text-xs font-semibold">IP Address</div>
-              <div>
-                {status.ip ?? 'play.stridesmp.xyz'}
-                {status.port ? `:${status.port}` : ''}
-              </div>
+              <div>play.stridesmp.xyz</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
+            <FiActivity className="w-6 h-6 text-blue-500" />
+            <div className="text-left">
+              <div className="text-blue-400 text-xs font-semibold">Port</div>
+              <div>19132</div>
             </div>
           </div>
 
           <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
             <FiClock className="w-6 h-6 text-blue-400" />
-            <div>
+            <div className="text-left">
               <div className="text-blue-400 text-xs font-semibold">Last Updated</div>
               <div>{lastUpdated ? lastUpdated.toLocaleTimeString() : '—'}</div>
             </div>
@@ -172,7 +171,7 @@ export default function ServerStatus() {
 
           <div className="flex items-center gap-3">
             <FiRefreshCw className="w-6 h-6 text-blue-400 animate-spin-slow" />
-            <div>
+            <div className="text-left">
               <div className="text-blue-400 text-xs font-semibold">Uptime</div>
               <div>{formatUptime(uptimeSeconds)}</div>
             </div>
