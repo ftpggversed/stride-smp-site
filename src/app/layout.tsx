@@ -4,8 +4,8 @@ import Footer from '@/components/footer';
 import DotGridBackground from '@/components/DotGridBackground';
 
 export const metadata = {
-  title: 'Stride SMP – Minecraft Server',
-  description: 'Join Stride SMP, a custom survival Minecraft server!',
+  title: 'JavaPVP – Minecraft Server',
+  description: 'Join JavaPVP, a custom lifesteal Minecraft server!',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
