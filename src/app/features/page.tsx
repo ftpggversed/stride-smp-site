@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FiCheckCircle, FiLayers, FiLock, FiTrendingUp, FiUsers, FiHelpCircle, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { FiCheckCircle, FiLayers, FiLock, FiTrendingUp, FiUsers, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 const features = [
   {

@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import { status } from 'minecraft-server-util';
 
-const SERVER_HOST = 'play.stridesmp.xyz'; // change to your Java server IP
-const SERVER_PORT = 19132; // default Java port
+const SERVER_HOST = 'play.stridesmp.xyz';
+const SERVER_PORT = 25565; // Java server default port
 
 export async function GET() {
   try {
+    // Query server status with a 3-second timeout
     const res = await status(SERVER_HOST, SERVER_PORT, { timeout: 3000 });
 
     return NextResponse.json({
@@ -19,7 +20,7 @@ export async function GET() {
       version: res.version.name || 'Unknown',
       ping: res.roundTripLatency,
     });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ online: false }, { status: 503 });
   }
 }
