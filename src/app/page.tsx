@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center px-6 py-24 max-w-3xl mx-auto text-center">
       <h1 className="text-6xl font-extrabold mb-6 tracking-wide">
-        Stride <span className="text-yellow-400">SMP</span>
+        Java<span className="text-yellow-400">PVP</span>
       </h1>
 
       <p className="text-xl text-gray-300 mb-10 max-w-lg">
