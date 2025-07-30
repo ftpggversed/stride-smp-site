@@ -42,7 +42,7 @@ export default function DotGridBackground() {
           const dx = x - mouse.x;
           const dy = y - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const color = dist < influence ? '#3B82F6' : '#444'; // blue or grey
+          const color = dist < influence ? '#FACC15' : '#444'; // yellow or grey
 
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, Math.PI * 2);
