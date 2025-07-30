@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center px-6 py-24 max-w-3xl mx-auto text-center">
       <h1 className="text-6xl font-extrabold mb-6 tracking-wide">
-        Stride <span className="text-blue-400">SMP</span>
+        Stride <span className="text-yellow-400">SMP</span>
       </h1>
 
       <p className="text-xl text-gray-300 mb-10 max-w-lg">
@@ -34,10 +34,10 @@ export default function Home() {
 
         {/* Server Info */}
         <dl className="mt-8 grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 text-gray-300 text-lg text-left">
-          <dt className="font-semibold text-blue-400">IP Address:</dt>
+          <dt className="font-semibold text-yellow-400">IP Address:</dt>
           <dd className="font-mono select-all cursor-text">play.stridesmp.xyz</dd>
 
-          <dt className="font-semibold text-blue-400">Port:</dt>
+          <dt className="font-semibold text-yellow-400">Port:</dt>
           <dd className="font-mono select-all cursor-text">19132</dd>
         </dl>
       </section>
