@@ -65,7 +65,7 @@ export default function ServerStatus() {
         <button
           onClick={fetchStatus}
           aria-label="Refresh Server Status"
-          className={`absolute top-4 right-4 p-2 rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white transition-colors focus:outline-none focus:ring-0 ${
+          className={`absolute top-4 right-4 p-2 rounded-md bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white transition-colors focus:outline-none focus:ring-0 ${
             refreshing ? 'animate-spin' : ''
           }`}
           title="Refresh Status"
@@ -76,29 +76,29 @@ export default function ServerStatus() {
 
         <header className="flex items-center gap-3 mb-5">
           <FiServer
-            className={`w-8 h-8 ${status.online ? 'text-blue-500' : 'text-red-600'}`}
+            className={`w-8 h-8 ${status.online ? 'text-yellow-500' : 'text-red-600'}`}
           />
           <h2
             className={`text-xl font-bold ${
-              status.online ? 'text-blue-400' : 'text-red-500'
+              status.online ? 'text-yellow-400' : 'text-red-500'
             }`}
           >
             {status.online ? 'Server Online' : 'Server Offline'}
           </h2>
         </header>
 
-        <div className="bg-gray-800 p-4 rounded-lg mb-6 text-blue-300 text-sm leading-relaxed font-mono whitespace-pre-wrap overflow-auto max-h-40">
+        <div className="bg-gray-800 p-4 rounded-lg mb-6 text-yellow-300 text-sm leading-relaxed font-mono whitespace-pre-wrap overflow-auto max-h-40">
           {status.motd}
         </div>
 
         {/* Software and Version */}
         <div className="flex justify-between border-t border-gray-700 pt-4 mb-6 text-gray-300 font-semibold text-sm sm:text-base">
           <div className="flex flex-col items-center w-1/2">
-            <div className="text-blue-400 font-semibold mb-1">Software</div>
+            <div className="text-yellow-400 font-semibold mb-1">Software</div>
             <div className="font-mono text-center">{status.software}</div>
           </div>
           <div className="flex flex-col items-center w-1/2">
-            <div className="text-blue-400 font-semibold mb-1">Version</div>
+            <div className="text-yellow-400 font-semibold mb-1">Version</div>
             <div className="font-mono text-center">{status.version}</div>
           </div>
         </div>
@@ -106,13 +106,13 @@ export default function ServerStatus() {
         {/* Ping and Players */}
         <div className="flex justify-between text-gray-300 font-semibold text-sm sm:text-base mb-6">
           <div className="flex flex-col items-center w-1/2">
-            <div className="text-blue-400 font-semibold mb-1">Ping</div>
+            <div className="text-yellow-400 font-semibold mb-1">Ping</div>
             <div className="font-mono">
               {typeof status.ping === 'number' ? `${status.ping} ms` : 'N/A'}
             </div>
           </div>
           <div className="flex flex-col items-center w-1/2">
-            <div className="text-blue-400 font-semibold mb-1">Players</div>
+            <div className="text-yellow-400 font-semibold mb-1">Players</div>
             <div className="font-mono">
               {status.players.online} / {status.players.max}
             </div>
@@ -122,25 +122,25 @@ export default function ServerStatus() {
         {/* IP / Port / Last Updated */}
         <div className="bg-gray-800 rounded-lg p-5 text-gray-300 font-mono text-sm space-y-6">
           <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
-            <FiWifi className="w-6 h-6 text-blue-500" />
+            <FiWifi className="w-6 h-6 text-yellow-500" />
             <div className="text-left">
-              <div className="text-blue-400 text-xs font-semibold">IP Address</div>
+              <div className="text-yellow-400 text-xs font-semibold">IP Address</div>
               <div>play.stridesmp.xyz</div>
             </div>
           </div>
 
           <div className="flex items-center gap-3 border-b border-gray-700 pb-3">
-            <FiActivity className="w-6 h-6 text-blue-500" />
+            <FiActivity className="w-6 h-6 text-yellow-500" />
             <div className="text-left">
-              <div className="text-blue-400 text-xs font-semibold">Port</div>
+              <div className="text-yellow-400 text-xs font-semibold">Port</div>
               <div>19132</div>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <FiClock className="w-6 h-6 text-blue-400" />
+            <FiClock className="w-6 h-6 text-yellow-400" />
             <div className="text-left">
-              <div className="text-blue-400 text-xs font-semibold">Last Updated</div>
+              <div className="text-yellow-400 text-xs font-semibold">Last Updated</div>
               <div>{lastUpdated ? lastUpdated.toLocaleTimeString() : '—'}</div>
             </div>
           </div>
@@ -149,7 +149,7 @@ export default function ServerStatus() {
 
       {/* Player List Card */}
       <section className="bg-gray-900 rounded-xl p-6 text-white flex flex-col min-h-[500px]">
-        <h3 className="text-xl font-semibold text-blue-400 mb-4 border-b border-blue-400 pb-2">
+        <h3 className="text-xl font-semibold text-yellow-400 mb-4 border-b border-yellow-400 pb-2">
           Online Players
         </h3>
 
@@ -158,7 +158,7 @@ export default function ServerStatus() {
             {status.players.list.map((player) => (
               <li
                 key={player.name}
-                className="truncate px-3 py-1 rounded hover:bg-blue-700 transition cursor-default"
+                className="truncate px-3 py-1 rounded hover:bg-yellow-700 transition cursor-default"
                 title={player.name}
               >
                 {player.name}
