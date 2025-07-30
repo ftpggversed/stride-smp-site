@@ -15,12 +15,12 @@ interface ServerStatusData {
 
 export default function ServerStatus() {
   const [status, setStatus] = useState<ServerStatusData | null>(null);
-  const [loading, setLoading] = useState(false); // start false so info stays visible on mount
+  const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [uptimeSeconds, setUptimeSeconds] = useState(0);
   const [refreshed, setRefreshed] = useState(false);
   const uptimeInterval = useRef<NodeJS.Timeout | null>(null);
-  const refreshedTimeout = useRef<NodeJS.Timeout | null>(null);
+  const refreshTimeout = useRef<NodeJS.Timeout | null>(null);
 
   async function fetchStatus() {
     setLoading(true);
@@ -31,22 +31,26 @@ export default function ServerStatus() {
       setStatus(data);
       setLastUpdated(new Date());
       setUptimeSeconds(0);
-
       setRefreshed(true);
-      if (refreshedTimeout.current) clearTimeout(refreshedTimeout.current);
-      refreshedTimeout.current = setTimeout(() => setRefreshed(false), 2000); // show "Refreshed!" for 2 seconds
+
+      // Reset "Refreshed!" text after 2 seconds
+      if (refreshTimeout.current) clearTimeout(refreshTimeout.current);
+      refreshTimeout.current = setTimeout(() => setRefreshed(false), 2000);
     } catch {
       setStatus(null);
     }
     setLoading(false);
   }
 
-  // fetch on mount once
   useEffect(() => {
     fetchStatus();
+    const interval = setInterval(fetchStatus, 30000);
+    return () => {
+      clearInterval(interval);
+      if (refreshTimeout.current) clearTimeout(refreshTimeout.current);
+    };
   }, []);
 
-  // uptime timer
   useEffect(() => {
     if (!lastUpdated) return;
     if (uptimeInterval.current) clearInterval(uptimeInterval.current);
@@ -57,7 +61,6 @@ export default function ServerStatus() {
 
     return () => {
       if (uptimeInterval.current) clearInterval(uptimeInterval.current);
-      if (refreshedTimeout.current) clearTimeout(refreshedTimeout.current);
     };
   }, [lastUpdated]);
 
@@ -66,6 +69,16 @@ export default function ServerStatus() {
     const m = Math.floor((sec % 3600) / 60);
     const s = sec % 60;
     return `${h > 0 ? h + 'h ' : ''}${m}m ${s}s`;
+  }
+
+  if (loading && !status) {
+    return (
+      <div className="animate-pulse max-w-md mx-auto bg-gray-900 rounded-xl shadow-lg p-5 mt-8 space-y-3">
+        <div className="h-7 bg-gray-700 rounded"></div>
+        <div className="h-5 bg-gray-700 rounded"></div>
+        <div className="h-5 bg-gray-700 rounded"></div>
+      </div>
+    );
   }
 
   if (!status) {
@@ -105,7 +118,9 @@ export default function ServerStatus() {
         <div className="flex items-center gap-2">
           <FiUsers className="w-5 h-5 text-blue-400" />
           <span>Players:</span>
-          <span className="ml-1 font-mono">{status.players.online} / {status.players.max}</span>
+          <span className="ml-1 font-mono">
+            {status.players.online} / {status.players.max}
+          </span>
         </div>
       </div>
 
@@ -131,15 +146,16 @@ export default function ServerStatus() {
         </div>
 
         {/* Refresh Button */}
-       <button
-  onClick={fetchStatus}
-  disabled={loading}
-  className="mt-3 w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-md py-2 text-white font-semibold transition"
-  aria-label="Refresh server status"
->
-  {loading ? 'Refresh Status' : refreshed ? 'Refreshed!' : 'Refresh Status'}
-</button>
-
+        <button
+          onClick={fetchStatus}
+          disabled={loading}
+          className={`mt-3 w-full rounded-md py-2 font-semibold transition text-white
+            ${loading ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'}
+          `}
+          aria-label="Refresh server status"
+        >
+          {refreshed ? 'Refreshed!' : 'Refresh Status'}
+        </button>
       </div>
     </div>
   );
