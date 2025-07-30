@@ -86,4 +86,10 @@ Need help or want to contribute? Reach out via [Discord](https://discord.gg/jPJ5
 
 ## 📄 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is **not open source**.
+
+All code, assets, and designs in this repository are the intellectual property of JavaPVP. You may not copy, redistribute, modify, or use any part of this project for personal or commercial purposes **without explicit written permission** from the owner.
+
+Unauthorized use is strictly prohibited and may result in legal action.
+
+For licensing inquiries, please contact: GGVersed#0 On Discord. 
